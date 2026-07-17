@@ -3,7 +3,7 @@
 # dependencies
 frontend-app/node_modules/
 frontend-app/.next/
-frontend-app/.pnp/
+/.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
