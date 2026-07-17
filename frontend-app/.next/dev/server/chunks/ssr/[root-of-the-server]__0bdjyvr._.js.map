@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 13, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Pichau/Documents/xerecahub/libtest/frontend-app/src/app/favicon.ico.mjs%20%28structured%20image%20object%29"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 256, height: 256 }\n"],"names":["src","width","height"],"mappings":";;;;AAAA;;uCACe;IAAEA,KAAAA,0IAAG;IAAEC,OAAO;IAAKC,QAAQ;AAAI"}},
+    {"offset": {"line": 28, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Pichau/Documents/xerecahub/libtest/frontend-app/src/app/paginaincial/page.jsx"],"sourcesContent":["import React from 'react'\r\n\r\nfunction page() {\r\n  return (\r\n    <div className={styles.texto}>piru</div>\r\n  )\r\n}\r\n\r\nexport default page"],"names":["page","className","styles","texto"],"mappings":";;;;;AAAA;;;AAEA,SAASA;IACP,qBACE,8OAAC;QAAIC,WAAWC,OAAOC,KAAK;kBAAE;;;;;;AAElC;uCAEeH"}}]
+}
