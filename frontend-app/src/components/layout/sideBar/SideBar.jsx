@@ -67,7 +67,7 @@ const SideBar = () => {
       <div className={styles.logo}>
         <Image
           src="/images/livro.svg"
-          width={120}
+          width={70}
           height={40}
           alt="Logo da libtest"
           priority
@@ -91,7 +91,7 @@ const SideBar = () => {
       <div className={`${styles.mobileMenu} ${mobileOpen ? styles.active : ""}`}>
         {menus.map((item) => (
           <div key={item.id} className={styles.mobileItem}>
-            <div
+            <div className={styles.mobileItemTitle}
               onClick={() => {
                 if (item.route) {
                   router.push(item.route);
