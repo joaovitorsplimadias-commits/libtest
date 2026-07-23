@@ -12,8 +12,7 @@ const SideBar = () => {
     {
       id: "colecao",
       title: "Coleção",
-      iconInactive: "/images/",
-      iconActive: "/images/",
+      iconInactive: "/images/colecao.svg",
       submenus: [
         {
           id: "gerenciarLivros",
@@ -40,8 +39,7 @@ const SideBar = () => {
     {
       id: "administracao",
       title: "Administração da equipe",
-      iconInactive: "/images/",
-      iconActive: "/images/",
+      iconInactive: "/images/adm.svg",
       submenus: [
         {
           id: "gerenciarEquipe",
@@ -108,8 +106,8 @@ const SideBar = () => {
               >
                 <Image
                   src={item.iconInactive}
-                  width={20}
-                  height={20}
+                  width={30}
+                  height={30}
                   alt={item.title}
                 />
                 <span>{item.title}</span>

@@ -4,6 +4,7 @@
   width: 260px;
   height: 100vh;
   background-color: #5381E6;
+  position: fixed
 }
 
 .logo {
@@ -34,10 +35,7 @@
 
 .mobileItemTitle {
   padding: 8px 20px;
-}
-
-.mobileItemTitle:hover {
-  background-color: #4a75d6;
+  white-space: nowrap;
 }
 
 .mobileSubmenu {
@@ -49,7 +47,7 @@
 .mobileSubItem {
   padding: 8px 20px;
   cursor: pointer;
-  color: #555;
+  color: rgba(255,255,255,.75);
   font-weight: 400;
   font-size: 14px;
 }
