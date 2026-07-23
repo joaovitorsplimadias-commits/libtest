@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SideBar from "@/components/layout/sideBar/SideBar";
 import styles from "./App.module.css";
 
@@ -135,11 +135,23 @@ const books = [
 
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"];
 
+
+function getTitleLetter(title) {
+  const char = title
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .charAt(0)
+    .toUpperCase();
+
+  return /[A-Z]/.test(char) ? char : "#";
+}
+
 export default function Page() {
   const [query, setQuery] = useState("");
   const [genre, setGenre] = useState("");
+  const [selectedLetter, setSelectedLetter] = useState("");
 
-  const filteredBooks = useMemo(() => {
+  const booksMatchingSearch = useMemo(() => {
     return books.filter((book) => {
       const matchesQuery =
         !query ||
@@ -152,6 +164,23 @@ export default function Page() {
       return matchesQuery && matchesGenre;
     });
   }, [query, genre]);
+
+  
+  const availableLetters = useMemo(() => {
+    return new Set(booksMatchingSearch.map((book) => getTitleLetter(book.title)));
+  }, [booksMatchingSearch]);
+
+  const filteredBooks = useMemo(() => {
+    if (!selectedLetter) return booksMatchingSearch;
+    return booksMatchingSearch.filter((book) => getTitleLetter(book.title) === selectedLetter);
+  }, [booksMatchingSearch, selectedLetter]);
+
+  
+  useEffect(() => {
+    if (selectedLetter && !availableLetters.has(selectedLetter)) {
+      setSelectedLetter("");
+    }
+  }, [availableLetters, selectedLetter]);
 
   return (
     <div className={styles.container}>
@@ -169,7 +198,7 @@ export default function Page() {
             onChange={(event) => setQuery(event.target.value)}
           />
 
-          <select value={genre} onChange={(event) => setGenre(event.target.value)}>
+          <select className={styles.genreSelect} value={genre} onChange={(event) => setGenre(event.target.value)}>
             <option value="">Todos os gêneros</option>
             <optgroup label="Ficção">
               <option value="romance">Romance</option>
@@ -197,22 +226,44 @@ export default function Page() {
         </div>
 
         <div className={styles.alfabeto}>
-          {alphabet.map((letter) => (
-            <button key={letter} type="button" className={styles.alfabetoButton}>
-              {letter}
-            </button>
-          ))}
+          {alphabet.map((letter) => {
+            const isActive = selectedLetter === letter;
+            const isAvailable = availableLetters.has(letter);
+
+            return (
+              <button
+                key={letter}
+                type="button"
+                aria-pressed={isActive}
+                disabled={!isAvailable}
+                className={[
+                  styles.alfabetoButton,
+                  isActive && styles.alfabetoButtonActive,
+                  !isAvailable && styles.alfabetoButtonDisabled,
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                onClick={() => setSelectedLetter((prev) => (prev === letter ? "" : letter))}
+              >
+                {letter}
+              </button>
+            );
+          })}
         </div>
 
         <div className={styles.catalogo}>
-          {filteredBooks.map((book) => (
-            <article key={book.isbn} className={styles.bookCard}>
-              <img className={styles.bookImage} src={book.cover} alt={book.title} />
-              <h3>{book.title}</h3>
-              <p>{book.author}</p>
-              <small>{book.genre}</small>
-            </article>
-          ))}
+          {filteredBooks.length === 0 ? (
+            <p className={styles.emptyState}>Nenhum livro encontrado com esses filtros.</p>
+          ) : (
+            filteredBooks.map((book) => (
+              <article key={book.isbn} className={styles.bookCard}>
+                <img className={styles.bookImage} src={book.cover} alt={book.title} />
+                <h3>{book.title}</h3>
+                <p>{book.author}</p>
+                <small>{book.genre}</small>
+              </article>
+            ))
+          )}
         </div>
       </div>
     </div>
